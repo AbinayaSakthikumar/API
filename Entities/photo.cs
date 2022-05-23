@@ -12,5 +12,7 @@ namespace API.Entities
         public AppUser AppUser { get; set; }
         public int AppUserId { get; set; }
 
+        public string Abi { get; set; }
+
     }
 }
