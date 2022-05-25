@@ -11,15 +11,6 @@ namespace API.Data.migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "Id",
-                table: "Users",
-                type: "TEXT",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "INTEGER")
-                .OldAnnotation("Sqlite:Autoincrement", true);
-
             migrationBuilder.AddColumn<string>(
                 name: "City",
                 table: "Users",
@@ -65,6 +56,19 @@ namespace API.Data.migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
+                name: "KnownAs",
+                table: "Users",
+                type: "TEXT",
+                nullable: true);
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "LastActive",
+                table: "Users",
+                type: "TEXT",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+            migrationBuilder.AddColumn<string>(
                 name: "LookingFor",
                 table: "Users",
                 type: "TEXT",
@@ -79,24 +83,23 @@ namespace API.Data.migrations
                     Url = table.Column<string>(type: "TEXT", nullable: true),
                     IsMain = table.Column<bool>(type: "INTEGER", nullable: false),
                     PublicId = table.Column<string>(type: "TEXT", nullable: true),
-                    AppUserId1 = table.Column<DateTime>(type: "TEXT", nullable: true),
                     AppUserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Photos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Photos_Users_AppUserId1",
-                        column: x => x.AppUserId1,
+                        name: "FK_Photos_Users_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Photos_AppUserId1",
+                name: "IX_Photos_AppUserId",
                 table: "Photos",
-                column: "AppUserId1");
+                column: "AppUserId");
         }
 
         /// <inheritdoc />
@@ -134,17 +137,16 @@ namespace API.Data.migrations
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "LookingFor",
+                name: "KnownAs",
                 table: "Users");
 
-            migrationBuilder.AlterColumn<int>(
-                name: "Id",
-                table: "Users",
-                type: "INTEGER",
-                nullable: false,
-                oldClrType: typeof(DateTime),
-                oldType: "TEXT")
-                .Annotation("Sqlite:Autoincrement", true);
+            migrationBuilder.DropColumn(
+                name: "LastActive",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "LookingFor",
+                table: "Users");
         }
     }
 }
