@@ -21,6 +21,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.Certificate;
 using API.Middleware;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace API
 {
