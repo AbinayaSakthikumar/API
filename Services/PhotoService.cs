@@ -2,17 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Helpers;
+using API.Interfaces;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using Microsoft.Extensions.Options;
 
 namespace API.Services
+
 {
-    public class PhotoService : IPhotoService
+    public class PhotoService : IPhotoService  
     {
+        
         private readonly Cloudinary _cloudinary;
         public PhotoService(IOptions<CloudinarySettings>config)
         {
             var acc = new Account
             (
-                config.Value.Cloudname,
+                config.Value.CloudName,
                 config.Value.ApiKey,
                 config.Value.ApiSecret
             );
@@ -34,19 +41,25 @@ namespace API.Services
                    File = new FileDescription(file.FileName, stream),
                    Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
                };
-               uploadResult = await _cloudinary.UploadAsync(uploadParams);
+               uploadresult = await _cloudinary.UploadAsync(uploadParams);
            }
 
-            return uploadResult;
+            return uploadresult;
         }
 
         public async Task<DeletionResult> DeletephotoAsync(string publicId)
         {
-            var deletParams = new DeletionParams(publicId);
+            var deleteParams = new DeletionParams(publicId);
 
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
             return result;
         }
-    }
+
+        public Task<DeletionResult> DeletePhotoAsync(string publicId)
+        {
+            throw new NotImplementedException();
+        }
+    }      
+    
 }

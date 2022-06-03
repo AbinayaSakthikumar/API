@@ -12,12 +12,12 @@ using API.Helpers;
 
 namespace API.Extensions
 {
-    public static class ApplicationServiceExtension
+    public static class ApplicationServiceExtensions
     {
          public static IServiceCollection AddApplicationServices(this  IServiceCollection services, IConfiguration config)
         {
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
-            services.AddScoped <ITokenService, TokenService> ();
+            services.AddScoped <ITokenService, TokenService>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
