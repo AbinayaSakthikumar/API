@@ -47,6 +47,8 @@ namespace API.Controllers
             var username = User.GetUsername();
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
 
+              //var user = await _userRepository.GetUserByUsernameAsync("lisa");
+
             _mapper.Map(memberUpdateDto, user);
 
             _userRepository.Update(user);
