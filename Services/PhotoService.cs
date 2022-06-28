@@ -47,18 +47,14 @@ namespace API.Services
             return uploadresult;
         }
 
-        public async Task<DeletionResult> DeletephotoAsync(string publicId)
+      
+        public async Task<DeletionResult> DeletePhotoAsync(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
 
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
             return result;
-        }
-
-        public Task<DeletionResult> DeletePhotoAsync(string publicId)
-        {
-            throw new NotImplementedException();
         }
     }      
     
